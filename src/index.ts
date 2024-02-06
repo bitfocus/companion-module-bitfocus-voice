@@ -9,8 +9,9 @@ import { UpdateActions } from './actions'
 import { SMTPConfig, GetConfigFields } from './config'
 import { UpdateVariableDefinitions } from './variables'
 
-import request from 'request'
 import { UpdateFeedbacks } from './feedbacks'
+import axios from 'axios'
+import { UpdatePresets } from './presets'
 
 export class SMTPInstance extends InstanceBase<SMTPConfig> {
 	private config: SMTPConfig
@@ -40,6 +41,7 @@ export class SMTPInstance extends InstanceBase<SMTPConfig> {
 		this.updateActions()
 		this.updateVariableDefinitions()
 		this.updateFeedbacks()
+		this.updatePresets()
 
 		return Promise.resolve()
 	}
@@ -80,18 +82,75 @@ export class SMTPInstance extends InstanceBase<SMTPConfig> {
 		UpdateFeedbacks(this)
 	}
 
+	updatePresets(): void {
+		// Update presets here
+		UpdatePresets(this)
+	}
+
 	async setLiveMode(state: InputValue): Promise<void> {
 		this.log('debug', `set live mode: ${state}`)
 
 		// request
-		const res = await request('http://' + this.config.host + ':' + this.config.port + '/live/' + state, {
-			method: 'POST',
-		})
+		const res = await axios.post('http://' + this.config.host + ':' + this.config.port + '/live/' + state)
 
-		if (res.response?.statusCode === 200) {
+		if (res.status === 200) {
 			this.log('info', `Live mode set to: ${state}`)
 		} else {
-			this.log('error', `Failed to set live mode: ${res.response?.statusCode}`)
+			this.log('error', `Failed to set live mode: ${res.statusText}`)
+		}
+
+		return Promise.resolve()
+	}
+
+	async test(): Promise<void> {
+		const path = 'http://' + this.config.host + ':' + this.config.port + '/test'
+
+		try {
+			const res = await axios.post(path)
+
+			if (res.status === 200) {
+				this.log('info', `Success`)
+			} else {
+				this.log('error', `Failed to test: ${res.statusText}`)
+			}
+		} catch (e) {
+			this.log('error', `Failed to test: ${path} ${e} `)
+		}
+
+		return Promise.resolve()
+	}
+
+	async activateNextSetlist(): Promise<void> {
+		const path = 'http://' + this.config.host + ':' + this.config.port + '/setlists/activate/next'
+
+		try {
+			const res = await axios.post(path)
+
+			if (res.status === 200) {
+				this.log('info', `Success`)
+			} else {
+				this.log('error', `Failed to activate next setlist: ${res.statusText}`)
+			}
+		} catch (e) {
+			this.log('error', `Failed to activate next setlist: ${path} ${e} `)
+		}
+
+		return Promise.resolve()
+	}
+
+	async activatePreviousSetlist(): Promise<void> {
+		const path = 'http://' + this.config.host + ':' + this.config.port + '/setlists/activate/previous'
+
+		try {
+			const res = await axios.post(path)
+
+			if (res.status === 200) {
+				this.log('info', `Success`)
+			} else {
+				this.log('error', `Failed to activate previous setlist: ${res.statusText}`)
+			}
+		} catch (e) {
+			this.log('error', `Failed to activate previous setlist: ${path} ${e} `)
 		}
 
 		return Promise.resolve()

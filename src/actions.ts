@@ -20,6 +20,33 @@ export function UpdateActions(self: SMTPInstance): void {
 			],
 			callback: async (action) => {
 				if (action.options.liveMode) await self.setLiveMode(action.options.liveMode)
+				await self.checkFeedbacks('liveMode')
+			},
+		},
+		test: {
+			name: 'Say Something',
+			description: 'Test the outputs',
+			options: [],
+			callback: async () => {
+				await self.test()
+			},
+		},
+		activateNextSetlist: {
+			name: 'Activate Next Setlist',
+			description: 'Activate the next setlist',
+			options: [],
+			callback: async () => {
+				await self.activateNextSetlist()
+				await self.checkFeedbacks('activeSetlist')
+			},
+		},
+		activatePreviousSetlist: {
+			name: 'Activate Previous Setlist',
+			description: 'Activate the previous setlist',
+			options: [],
+			callback: async () => {
+				await self.activatePreviousSetlist()
+				await self.checkFeedbacks('activeSetlist')
 			},
 		},
 	})

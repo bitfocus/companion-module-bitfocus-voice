@@ -2,7 +2,7 @@ import { CompanionVariableDefinition, InstanceBase } from '@companion-module/bas
 import { SMTPConfig } from './config'
 
 export function UpdateVariableDefinitions(instance: InstanceBase<SMTPConfig>): void {
-	const variables: CompanionVariableDefinition[] = [{ variableId: 'liveMode', name: 'Live Mode' }]
+	const variables: CompanionVariableDefinition[] = []
 
 	instance.setVariableDefinitions(variables)
 }
