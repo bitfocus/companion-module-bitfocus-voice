@@ -25,9 +25,7 @@
 		"node": "^18.12"
 	},
 	"dependencies": {
-		"@companion-module/base": "~1.0.2",
-		"node-rest-client": "^3.1.1",
-		"nodemailer": "^6.9.3",
+		"@companion-module/base": "^1.7.0",
 		"request": "^2.88.2"
 	},
 	"devDependencies": {

@@ -1,14 +1,4 @@
-import { InstanceStatus } from '@companion-module/base'
 import { SMTPInstance } from './index'
-
-export interface Mail {
-	recipient?: string
-	cc?: string
-	bcc?: string
-	subject?: string
-	message?: string
-	replyTo?: string
-}
 
 export function UpdateActions(self: SMTPInstance): void {
 	self.setActionDefinitions({
@@ -22,11 +12,15 @@ export function UpdateActions(self: SMTPInstance): void {
 					label: 'Live mode',
 					default: 'true',
 					choices: [
-						{ id: 'true', label: 'True' },
-						{ id: 'false', label: 'False' },
+						{ id: 'true', label: 'On' },
+						{ id: 'false', label: 'Off' },
+						{ id: 'toggle', label: 'Toggle' },
 					],
 				},
 			],
+			callback: async (action) => {
+				if (action.options.liveMode) await self.setLiveMode(action.options.liveMode)
+			},
 		},
 	})
 }

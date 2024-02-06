@@ -1,13 +1,21 @@
-import { InstanceBase, InstanceStatus, runEntrypoint, SomeCompanionConfigField } from '@companion-module/base'
-import { UpdateActions, Mail } from './actions'
+import {
+	InputValue,
+	InstanceBase,
+	InstanceStatus,
+	runEntrypoint,
+	SomeCompanionConfigField,
+} from '@companion-module/base'
+import { UpdateActions } from './actions'
 import { SMTPConfig, GetConfigFields } from './config'
 import { UpdateVariableDefinitions } from './variables'
 
 import request from 'request'
+import { UpdateFeedbacks } from './feedbacks'
 
 export class SMTPInstance extends InstanceBase<SMTPConfig> {
 	private config: SMTPConfig
 	status: string
+	feedbackTimers: { [key: string]: any } = {}
 
 	constructor(internal: unknown) {
 		super(internal)
@@ -31,6 +39,8 @@ export class SMTPInstance extends InstanceBase<SMTPConfig> {
 
 		this.updateActions()
 		this.updateVariableDefinitions()
+		this.updateFeedbacks()
+
 		return Promise.resolve()
 	}
 
@@ -65,19 +75,23 @@ export class SMTPInstance extends InstanceBase<SMTPConfig> {
 		UpdateVariableDefinitions(this)
 	}
 
-	async setLiveMode(state: boolean): Promise<void> {
-		this.log('debug', `set live moe: ${state}`)
+	updateFeedbacks(): void {
+		// Update feedbacks here
+		UpdateFeedbacks(this)
+	}
+
+	async setLiveMode(state: InputValue): Promise<void> {
+		this.log('debug', `set live mode: ${state}`)
 
 		// request
-		const res = await request('/live/' + state ? 'on' : 'off', {
-			host: this.config.host,
-			port: this.config.port,
+		const res = await request('http://' + this.config.host + ':' + this.config.port + '/live/' + state, {
+			method: 'POST',
 		})
 
-		if (res.statusCode === 200) {
+		if (res.response?.statusCode === 200) {
 			this.log('info', `Live mode set to: ${state}`)
 		} else {
-			this.log('error', `Failed to set live mode: ${res.statusCode}`)
+			this.log('error', `Failed to set live mode: ${res.response?.statusCode}`)
 		}
 
 		return Promise.resolve()
