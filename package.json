@@ -1,0 +1,48 @@
+{
+	"name": "companion-module-bitfocus-voice",
+	"version": "1.0.0",
+	"main": "dist/index.js",
+	"scripts": {
+		"prepare": "husky install",
+		"build": "rimraf dist && yarn build:main",
+		"build:main": "tsc -p tsconfig.build.json",
+		"dev": "tsc -p tsconfig.build.json --watch",
+		"lint:raw": "eslint --ext .ts --ext .js --ignore-pattern dist --ignore-pattern pkg",
+		"lint": "yarn lint:raw .",
+		"format": "prettier -w ."
+	},
+	"license": "MIT",
+	"prettier": "@companion-module/tools/.prettierrc.json",
+	"lint-staged": {
+		"*.{css,json,md,scss}": [
+			"prettier --write"
+		],
+		"*.{ts,tsx,js,jsx}": [
+			"yarn lint:raw --fix"
+		]
+	},
+	"engines": {
+		"node": "^18.12"
+	},
+	"dependencies": {
+		"@companion-module/base": "~1.0.2",
+		"node-rest-client": "^3.1.1",
+		"nodemailer": "^6.9.3",
+		"request": "^2.88.2"
+	},
+	"devDependencies": {
+		"@companion-module/tools": "^0.4.1",
+		"@types/node": "^18.11.9",
+		"@types/nodemailer": "^6.4.8",
+		"@types/request": "^2.48.12",
+		"@types/ws": "^8.5.3",
+		"husky": "^8.0.1",
+		"lint-staged": "^13.0.3",
+		"rimraf": "^3.0.2",
+		"typescript": "~4.9"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bitfocus/companion-module-bitfocus-voice.git"
+	}
+}

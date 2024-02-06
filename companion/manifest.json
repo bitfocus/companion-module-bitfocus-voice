@@ -1,0 +1,25 @@
+{
+	"id": "bitfocus-voice",
+	"name": "bitfocus-voice",
+	"shortname": "voice",
+	"description": "Bitfocus Voice",
+	"version": "1.0.0",
+	"license": "MIT",
+	"repository": "git+https://github.com/bitfocus/companion-module-bitfocus-voice.git",
+	"bugs": "https://github.com/bitfocus/companion-module-bitfocus-voice/issues",
+	"maintainers": [
+		{
+			"name": "Erlend Jones",
+			"email": "erlend.jones+voice@gmail.com"
+		}
+	],
+	"legacyIds": [],
+	"runtime": {
+		"type": "node18",
+		"api": "nodejs-ipc",
+		"apiVersion": "0.0.0",
+		"entrypoint": "../dist/index.js"
+	},
+	"manufacturer": "Bitfocus",
+	"products": ["VOICE"]
+}
