@@ -52,8 +52,7 @@ export function UpdateFeedbacks(self: SMTPInstance): void {
 			},
 			callback: async (feedback) => {
 				try {
-					// use axios to fetch json value of localhost:4647/live
-					const res = await axios.get('http://localhost:4647/live')
+					const res = await axios.get('http://' + self.config.host + ':' + self.config.port + '/live')
 					const state = res.data.live
 
 					const change: Partial<CompanionButtonStyleProps> = {}
@@ -118,8 +117,7 @@ export function UpdateFeedbacks(self: SMTPInstance): void {
 			},
 			callback: async () => {
 				try {
-					// use axios to fetch json value of localhost:4647/live
-					const res = await axios.get('http://localhost:4647/tc')
+					const res = await axios.get('http://' + self.config.host + ':' + self.config.port + '/tc')
 					const state = res.data
 
 					const change: Partial<CompanionButtonStyleProps> = {}
@@ -181,8 +179,7 @@ export function UpdateFeedbacks(self: SMTPInstance): void {
 			},
 			callback: async () => {
 				try {
-					// use axios to fetch json value of localhost:4647/live
-					const res = await axios.get('http://localhost:4647/setlists/active')
+					const res = await axios.get('http://' + self.config.host + ':' + self.config.port + '/setlists/active')
 					const state = res.data
 
 					const change: Partial<CompanionButtonStyleProps> = {}

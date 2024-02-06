@@ -18,7 +18,7 @@ export function GetConfigFields(): SomeCompanionConfigField[] {
 			type: 'number',
 			id: 'port',
 			label: 'Port',
-			default: 4647,
+			default: 4648,
 			min: 1,
 			max: 65535,
 			width: 10,

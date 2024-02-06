@@ -14,7 +14,7 @@ import axios from 'axios'
 import { UpdatePresets } from './presets'
 
 export class SMTPInstance extends InstanceBase<SMTPConfig> {
-	private config: SMTPConfig
+	config: SMTPConfig
 	status: string
 	feedbackTimers: { [key: string]: any } = {}
 
@@ -22,7 +22,7 @@ export class SMTPInstance extends InstanceBase<SMTPConfig> {
 		super(internal)
 		this.config = {
 			host: '',
-			port: 4647,
+			port: 4648,
 		}
 		this.status = ''
 	}
