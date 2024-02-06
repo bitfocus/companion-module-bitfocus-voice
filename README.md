@@ -1,1 +1,1 @@
-# companion-module-generic-smtp
+# companion-module-bitfocus-voice
