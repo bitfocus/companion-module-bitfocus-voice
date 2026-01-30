@@ -29,7 +29,7 @@
 		"axios": "^1.12.0"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^0.4.1",
+		"@companion-module/tools": "^1.5.2",
 		"@types/node": "^18.11.9",
 		"@types/nodemailer": "^6.4.8",
 		"@types/request": "^2.48.12",
